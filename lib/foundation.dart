@@ -2,6 +2,7 @@
 /// 最初から共通。8,000 行以内を目安に保つ。
 library;
 
+export 'foundation/accessibility.dart';
 export 'foundation/clock.dart';
 export 'foundation/economy.dart';
 export 'foundation/interfaces.dart';
