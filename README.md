@@ -1,6 +1,7 @@
 # puzzle_core
 
 Everpuzz パズルシリーズの共通基盤（内部名。ストアには出さない）。純Dart。
+各ゲームは別リポジトリで、この基盤を **タグ固定の git 依存**（`ref: vX.Y.Z`）で使う。基盤を直しても、ゲーム側は自分のタイミングで版を上げるまで壊れない。
 設計: Drive `puzzle-series（パズル共通基盤）` の 02_設計書 / 03_決定事項。
 
 ## 構成（依存は下向きのみ。CIで検査）
@@ -34,6 +35,18 @@ class MyRules extends PuzzleRules<MyState, MyMove> { /* initial/legalMoves/apply
 final verified = LevelVerifier(MyRules(), solverVersion: 'bfs-1').verifyPack(pack);
 assert(verified.validate().isEmpty); // 解けない面が1件でもあれば不合格
 ```
+
+## ゲームからの使い方
+
+```yaml
+dependencies:
+  puzzle_core:
+    git:
+      url: https://github.com/zka32101/puzzle_core.git
+      ref: v0.1.0
+```
+
+破壊的変更はメジャー(またはv0系ではマイナー)を上げ、`docs/decisions/` に ADR を残す。
 
 ## 開発
 
