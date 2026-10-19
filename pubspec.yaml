@@ -1,0 +1,11 @@
+name: puzzle_core
+description: "Everpuzz パズルシリーズ共通基盤 — foundation / puzzle / kits / meta（純Dart）"
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.5.0
+
+dev_dependencies:
+  lints: ^5.0.0
+  test: ^1.25.0
