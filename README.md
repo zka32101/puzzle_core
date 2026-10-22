@@ -15,9 +15,21 @@ foundation ← puzzle ← kits ← meta ← 各ゲーム
 | `lib/foundation` | Clock・保存(版管理)・level・progress・economy・telemetry・l10n・差し込みIF | 実装済み |
 | `lib/puzzle` | PuzzleRules・ソルバー(BFS)・レベル検証・星計算・難易度推定 | 実装済み |
 | `lib/kits` | 盤面・入力・アニメーション部品 | 空（1本目で書き、2本目で使われたものだけ昇格） |
-| `lib/meta` | 町づくり・図鑑など | 空（同上） |
+| `lib/meta` | メニュー構成(ショップ・設定・情報)・設定の保存。町づくり・図鑑などは1本目で書き、2本目で使われたものだけ昇格 | メニュー・設定は実装済み |
 
 ゲームは必要な範囲だけ import する: `package:puzzle_core/foundation.dart` / `puzzle.dart`。
+
+## 標準のメニュー構成（`package:puzzle_core/meta.dart`）
+
+ホームは各ゲーム固有。ホームの上部に **ショップ → 設定 → 情報** を並べる(ショップは課金の窓口・商品がそろっている時だけ)。画面(UI)は各ゲームが持ち、ここは「何を・どの順で・どの条件で出すか」と文言・設定の保存だけを定める純Dart。
+
+| 関数・型 | 内容 |
+|---|---|
+| `buildMenu(MenuContext)` | 上位メニュー(ショップ/設定/情報) |
+| `buildSettings(MenuContext)` | 設定: 言語・動きを減らす・購入の復元(ショップがある時)・データ削除(確認つき) |
+| `buildInfo(MenuContext)` | 情報: プライバシー・規約(URLがある時)・クレジット(権利表記)・版 |
+| `AppSettings` / `SettingsStore` | 言語の上書き・動きを減らす。版管理つき保存、破損は既定値 |
+| `commonBundles` | 上の文言(ja/en)。ゲームの辞書に足して使う |
 
 ## 守ること
 

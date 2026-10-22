@@ -1,0 +1,51 @@
+/// メニュー(ショップ・設定・情報)の共通文言。ゲームの辞書に足して使う
+/// (`{...gameBundles['ja']!, ...commonBundles['ja']!}`)。言語の追加は Map にロケールを足すだけ。
+library;
+
+const commonBundles = <String, Map<String, String>>{
+  'ja': {
+    'menu.shop': 'ショップ',
+    'menu.settings': '設定',
+    'menu.info': '情報',
+    'settings.general': '一般',
+    'settings.language': '言語',
+    'settings.languageDevice': '端末に合わせる',
+    'settings.reduceMotion': '動きを減らす',
+    'settings.purchases': '購入',
+    'settings.restore': '購入を復元',
+    'settings.restored': '復元しました。',
+    'settings.data': 'データ',
+    'settings.deleteData': 'データを削除',
+    'settings.deleteTitle': 'データを削除しますか?',
+    'settings.deleteBody': '進行・コイン・町の状態が消えます。購入した内容はストアから復元できます。',
+    'settings.deleteConfirm': '削除する',
+    'settings.cancel': 'やめる',
+    'info.privacy': 'プライバシーポリシー',
+    'info.terms': '利用規約',
+    'info.credits': 'クレジット',
+    'info.version': 'バージョン',
+  },
+  'en': {
+    'menu.shop': 'Shop',
+    'menu.settings': 'Settings',
+    'menu.info': 'Info',
+    'settings.general': 'General',
+    'settings.language': 'Language',
+    'settings.languageDevice': 'Follow device',
+    'settings.reduceMotion': 'Reduce motion',
+    'settings.purchases': 'Purchases',
+    'settings.restore': 'Restore purchases',
+    'settings.restored': 'Restored.',
+    'settings.data': 'Data',
+    'settings.deleteData': 'Delete data',
+    'settings.deleteTitle': 'Delete your data?',
+    'settings.deleteBody':
+        'Your progress, coins and town will be erased. Purchases can be restored from the store.',
+    'settings.deleteConfirm': 'Delete',
+    'settings.cancel': 'Cancel',
+    'info.privacy': 'Privacy policy',
+    'info.terms': 'Terms of use',
+    'info.credits': 'Credits',
+    'info.version': 'Version',
+  },
+};

@@ -1,3 +1,6 @@
-/// メタ要素（町づくり・コレクション・育成・日替わりチャレンジ）。
-/// 1本目のゲームで meta/ に分けて書き、2本目で使われた部品だけ共通に昇格する。
+/// puzzle_core meta: ゲーム全体の枠(メニュー・設定)など。純Dart(UIは各ゲーム)。
 library;
+
+export 'meta/menu.dart';
+export 'meta/menu_l10n.dart';
+export 'meta/settings.dart';
