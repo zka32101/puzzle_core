@@ -5,7 +5,10 @@ library;
 enum ReviewStatus { draft, reviewed, approved }
 
 /// 端末言語から対応言語を決める。
-/// 完全一致 → 言語コード一致（pt-BR → pt）→ [fallbackChain] の順。
+/// 完全一致 → 中国語の字体(簡体/繁体)→ 言語コード一致（pt-BR → pt）→ [fallbackChain] の順。
+///
+/// 中国語は `zh-Hans`(簡体字)と `zh-Hant`(繁体字)を別の言語として持てる。端末のタグに字体
+/// (`zh-Hant-TW`)があればそれ、無ければ地域(TW・HK・MO は繁体、それ以外は簡体)で決める。
 String resolveLocale(
   String device,
   Set<String> supported, {
@@ -13,7 +16,12 @@ String resolveLocale(
 }) {
   final d = device.replaceAll('_', '-');
   if (supported.contains(d)) return d;
-  final lang = d.split('-').first;
+  final parts = d.split('-');
+  final lang = parts.first;
+  if (lang == 'zh') {
+    final script = _chineseScript(parts);
+    if (supported.contains('zh-$script')) return 'zh-$script';
+  }
   if (supported.contains(lang)) return lang;
   for (final s in supported) {
     if (s.split('-').first == lang) return s;
@@ -22,6 +30,18 @@ String resolveLocale(
     if (supported.contains(f)) return f;
   }
   throw ArgumentError('対応言語が見つからない: $device');
+}
+
+/// 端末の中国語タグから、字体('Hans' か 'Hant')を決める。
+String _chineseScript(List<String> parts) {
+  for (final p in parts.skip(1)) {
+    if (p == 'Hans' || p == 'Hant') return p;
+  }
+  const traditionalRegions = {'TW', 'HK', 'MO'};
+  for (final p in parts.skip(1)) {
+    if (traditionalRegions.contains(p.toUpperCase())) return 'Hant';
+  }
+  return 'Hans';
 }
 
 /// 翻訳引き。`{name}` の置換と、簡易ICU複数形
