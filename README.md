@@ -29,7 +29,7 @@ foundation ← puzzle ← kits ← meta ← 各ゲーム
 | `buildSettings(MenuContext)` | 設定: 言語・動きを減らす・購入の復元(ショップがある時)・データ削除(確認つき) |
 | `buildInfo(MenuContext)` | 情報: プライバシー・規約(URLがある時)・クレジット(権利表記)・版 |
 | `AppSettings` / `SettingsStore` | 言語の上書き・動きを減らす。版管理つき保存、破損は既定値 |
-| `commonBundles` | 上の文言(ja/en)。ゲームの辞書に足して使う |
+| `commonBundles` | 上の文言(ja・en・ko・es・zh-Hans・zh-Hant)。ゲームの辞書に足して使う。中国語は字体(簡体/繁体)で振り分ける(`resolveLocale`) |
 
 ## 守ること
 

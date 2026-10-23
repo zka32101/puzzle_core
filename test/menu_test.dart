@@ -63,22 +63,28 @@ void main() {
         )))
           i.labelKey,
       };
-      for (final l in ['ja', 'en']) {
+      for (final l in commonBundles.keys) {
         for (final k in keys) {
           expect(commonBundles[l]!.containsKey(k), isTrue, reason: '$l: $k');
         }
       }
     });
 
-    test('共通辞書の ja と en は欠落・プレースホルダ不一致がない', () {
-      expect(
-          L10nLint.compare(commonBundles['ja']!, commonBundles['en']!,
-              locale: 'en'),
-          isEmpty);
-      expect(
-          L10nLint.compare(commonBundles['en']!, commonBundles['ja']!,
-              locale: 'ja'),
-          isEmpty);
+    test('共通辞書は、全ての言語が ja と過不足なく同じキーを持ち、プレースホルダが合う', () {
+      expect(commonBundles.keys,
+          containsAll(['ja', 'en', 'ko', 'es', 'zh-Hans', 'zh-Hant']));
+      for (final l in commonBundles.keys.where((l) => l != 'ja')) {
+        expect(
+            L10nLint.compare(commonBundles['ja']!, commonBundles[l]!,
+                locale: l),
+            isEmpty,
+            reason: 'ja → $l');
+        expect(
+            L10nLint.compare(commonBundles[l]!, commonBundles['ja']!,
+                locale: 'ja'),
+            isEmpty,
+            reason: '$l → ja');
+      }
     });
   });
 

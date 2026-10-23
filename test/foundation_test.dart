@@ -176,6 +176,35 @@ void main() {
       expect(resolveLocale('fr', {'ja'}), 'ja');
     });
 
+    test('中国語は字体(簡体/繁体)で振り分ける。地域だけの端末タグも判定する', () {
+      const sup = {'ja', 'en', 'ko', 'es', 'zh-Hans', 'zh-Hant'};
+      expect(resolveLocale('zh-Hant-TW', sup), 'zh-Hant');
+      expect(resolveLocale('zh-Hans-CN', sup), 'zh-Hans');
+      expect(resolveLocale('zh-TW', sup), 'zh-Hant');
+      expect(resolveLocale('zh_HK', sup), 'zh-Hant');
+      expect(resolveLocale('zh-CN', sup), 'zh-Hans');
+      expect(resolveLocale('zh', sup), 'zh-Hans');
+      expect(resolveLocale('ko-KR', sup), 'ko');
+      expect(resolveLocale('es-MX', sup), 'es');
+      // 簡体だけ・繁体だけを持つアプリでも、中国語の端末は、持っている方になる
+      expect(resolveLocale('zh-TW', {'ja', 'en', 'zh-Hans'}), 'zh-Hans');
+      expect(resolveLocale('zh-CN', {'ja', 'en', 'zh-Hant'}), 'zh-Hant');
+      // 対応外の言語は、従来どおり英語
+      expect(resolveLocale('fr-FR', sup), 'en');
+    });
+
+    test('複数形: 日・韓・中は other のみ、スペイン語などは one/other', () {
+      const b = {
+        'es': {'m': '{count, plural, one{# movimiento} other{# movimientos}}'},
+        'ko': {'m': '{count, plural, other{#수}}'},
+        'zh-Hans': {'m': '{count, plural, other{#步}}'},
+      };
+      expect(Translator('es', b).tr('m', {'count': 1}), '1 movimiento');
+      expect(Translator('es', b).tr('m', {'count': 2}), '2 movimientos');
+      expect(Translator('ko', b).tr('m', {'count': 1}), '1수');
+      expect(Translator('zh-Hans', b).tr('m', {'count': 3}), '3步');
+    });
+
     test('置換と複数形', () {
       final en = Translator('en', bundles);
       expect(en.tr('hi', {'name': 'Ann'}), 'Hello, Ann');
