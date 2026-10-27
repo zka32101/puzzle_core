@@ -6,6 +6,7 @@ class LevelRecord {
     this.stars = 0,
     this.bestMoves,
     this.attempts = 0,
+    this.completionData,
   });
 
   factory LevelRecord.fromJson(Json j) => LevelRecord(
@@ -13,6 +14,7 @@ class LevelRecord {
         stars: j['stars']! as int,
         bestMoves: j['bestMoves'] as int?,
         attempts: j['attempts']! as int,
+        completionData: j['completionData'] as Json?,
       );
 
   final bool cleared;
@@ -20,11 +22,16 @@ class LevelRecord {
   final int? bestMoves;
   final int attempts;
 
+  /// gem_puzzle 固有: 完成時のメタデータ
+  /// 例: {'animalId': 'animal_001', 'completedAt': '2026-09-11T...'}
+  final Json? completionData;
+
   Json toJson() => {
         'cleared': cleared,
         'stars': stars,
         'bestMoves': bestMoves,
         'attempts': attempts,
+        if (completionData != null) 'completionData': completionData,
       };
 }
 

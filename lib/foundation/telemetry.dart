@@ -31,6 +31,31 @@ class TelemetryEvent {
   factory TelemetryEvent.purchase(String productId) =>
       TelemetryEvent('purchase', {'productId': productId});
 
+  /// gem_puzzle 固有: 完成イベント（動物出現）
+  factory TelemetryEvent.puzzleCompleted(
+    String levelId,
+    int moves,
+    int? animalId,
+  ) =>
+      TelemetryEvent('puzzle_completed', {
+        'levelId': levelId,
+        'moves': moves,
+        if (animalId != null) 'animalId': animalId,
+      });
+
+  /// gem_puzzle 固有: 動物交流イベント
+  factory TelemetryEvent.animalInteracted(
+    String animalId,
+    int affectionLevel,
+  ) =>
+      TelemetryEvent('animal_interacted',
+          {'animalId': animalId, 'affectionLevel': affectionLevel});
+
+  /// gem_puzzle 固有: 群れボーナス解放イベント
+  factory TelemetryEvent.herdBonusUnlocked(List<String> animalIds) =>
+      TelemetryEvent(
+          'herd_bonus_unlocked', {'animalIds': animalIds, 'count': animalIds.length});
+
   final String name;
   final Map<String, Object?> params;
 }
